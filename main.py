@@ -1,0 +1,4 @@
+from components_returns.cpu_returns import CPUReturns
+from components_returns.gpu_returns import GPUReturns
+from components_returns.motherboard_returns import MotherboardReturns
+from components_returns.ram_mem_returns import RamMemReturns
