@@ -14,3 +14,9 @@ class MotherboardReturns():
                 return "error"
         except Exception as e:
             return f"Erro: {str(e)}"
+
+    def get_motherboard_manufacturer(self):
+        pass
+
+    def get_motherboard_model_name(self):
+        pass
