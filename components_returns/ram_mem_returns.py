@@ -1,7 +1,7 @@
 import psutil
 from psutil._common import bytes2human
 
-class RamMemReturns():
+class MemRamReturns():
     def __init__(self):
         pass
 
@@ -20,15 +20,13 @@ class RamMemReturns():
         return available_mem
 
     def get_ram_mem_active(self):
-        active_mem = psutil.virtual_memory().available
+        active_mem = psutil.virtual_memory().active
 
         active_mem = bytes2human(active_mem)
 
         return active_mem
 
     def get_ram_mem_percent(self):
-        percent_mem = psutil.virtual_memory().available
+        percent_mem = psutil.virtual_memory().percent
 
-        percent_mem = bytes2human(percent_mem)
-
-        return active_mem
+        return percent_mem

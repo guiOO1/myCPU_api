@@ -9,14 +9,21 @@ class MotherboardReturns():
             result = subprocess.run(['sudo', 'dmidecode', '-t', '2'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             
             if result.returncode == 0:
-                return result.stdout
+                self.motherboard_manufacturer = result.stdout.splitlines()[6]
+                self.motherboard_model_name = result.stdout.splitlines()[7]
             else:
-                return "error"
+                self.motherboard_manufacturer = "NaN"
+                self.motherboard_model_name = "NaN"
+
         except Exception as e:
-            return f"Erro: {str(e)}"
+            print(f"Erro: {str(e)}")
 
     def get_motherboard_manufacturer(self):
-        pass
+        self.get_motherboard_info()
+
+        return self.motherboard_manufacturer[15:]
 
     def get_motherboard_model_name(self):
-        pass
+        self.get_motherboard_info()
+
+        return self.motherboard_model_name[15:]

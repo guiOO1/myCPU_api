@@ -9,17 +9,17 @@ class GPUReturns():
 
         return gpu_name
 
-    def get_gpu_mem_info(self):
-        gpu_mem_info = self.mygpu.memory_info
+    def get_gpu_vram_total(self):
+        gpu_mem_info = self.mygpu.memory_info['vram_size']
 
-        return gpu_mem_info
+        return "%.2f"%(gpu_mem_info / 1024 / 1024 / 1024)
 
     def get_gpu_vram_usage(self):
         gpu_vram_usage = self.mygpu.query_vram_usage()
 
-        return gpu_vram_usage
+        return "%.2f"%(gpu_vram_usage / 1024 / 1024 / 1024)
 
-    def get_gpu_temp(self):
+    def get_gpu_temperature(self):
         gpu_temperature = self.mygpu.query_temperature()
 
         return gpu_temperature
@@ -32,4 +32,4 @@ class GPUReturns():
     def get_gpu_usage(self):
         gpu_usage = self.mygpu.query_load()
 
-        return gpu_usage
+        return int(gpu_usage * 100)

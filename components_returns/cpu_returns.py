@@ -10,12 +10,12 @@ class CPUReturns():
 
         return cpu_name
 
-    def get_cpu_percent():
-        cpu_percent = psutil.cpu_percent(self)
+    def get_cpu_percent(self):
+        cpu_percent = psutil.cpu_percent(interval=1)
 
         return cpu_percent
 
-    def get_cpu_freq():
-        cpu_freq = psutil.cpu_freq(self)
+    def get_cpu_freq(self):
+        cpu_freq = psutil.cpu_freq()
 
-        return cpu_freq    
+        return int(list(cpu_freq)[0])

@@ -19,6 +19,7 @@ class DatabaseInitialization():
 
         self.creating_database()
         self.creating_users()
+        self.creating_tables()
 
     def creating_database(self):
         create_description = (f"CREATE DATABASE {self.database_name}")
@@ -27,6 +28,8 @@ class DatabaseInitialization():
             self.cnx_cursor.execute(create_description)
         except mysql.connector.Error as error:
             print(error)
+
+        self.cnx_cursor.execute(f'USE {self.database_name};')
 
     def creating_users(self):
         USERS = {}
@@ -57,39 +60,44 @@ class DatabaseInitialization():
     def creating_tables(self):
         TABLES = {}
 
-        #gpu tables
-        TABLES['gpu_name'] = ()
+        #gpu table
+        TABLES['gpu_infos'] = (
+            "CREATE TABLE `gpu_infos` ("
+            "  `gpu_name` varchar(50) NOT NULL,"
+            "  `gpu_vram_total_gb` varchar(4) NOT NULL,"
+            "  `gpu_vram_usage_gb` varchar(4) NOT NULL,"
+            "  `gpu_temperature_celcius` float NOT NULL,"
+            "  `gpu_power_watts` smallint NOT NULL,"
+            "  `gpu_usage_percent` smallint NOT NULL,"
+            "  `datetime` datetime NOT NULL)"
+            )
 
-        TABLES['gpu_mem_info'] = ()
+        #cpu table
+        TABLES['cpu_infos'] = (
+            "CREATE TABLE `cpu_infos` ("
+            "  `cpu_name` varchar(50) NOT NULL,"
+            "  `cpu_percent` float NOT NULL,"
+            "  `cpu_freq` smallint NOT NULL,"
+            "  `datetime` datetime NOT NULL)"
+            )
 
-        TABLES['gpu_vram_usage'] = ()
-
-        TABLES['gpu_temperature'] = ()
-
-        TABLES['gpu_power'] = ()
-
-        TABLES['gpu_usage'] = ()
-
-        #cpu tables
-        TABLES['cpu_name'] = ()
-
-        TABLES['cpu_percent'] = ()
-
-        TABLES['cpu_freq'] = ()
-
-        #mem ram tables
-        TABLES['total_mem'] = ()
-
-        TABLES['available_mem'] = ()
-
-        TABLES['active_mem'] = ()
-
-        TABLES['active_mem'] = ()
+        #mem ram table
+        TABLES['mem_ram_info'] = (
+            "CREATE TABLE `mem_ram_infos` ("
+            "  `total_mem` varchar(5) NOT NULL,"
+            "  `available_mem` varchar(5) NOT NULL,"
+            "  `active_mem` varchar(5) NOT NULL,"
+            "  `percent_mem` float NOT NULL,"
+            "  `datetime` datetime NOT NULL)"
+            )
 
         #motherboard tables
-        TABLES['motherboard_manufacturer'] = ()
-
-        TABLES['motherboard_model_name'] = ()
+        TABLES['motherboard_infos'] = (
+            "CREATE TABLE `motherboard_infos` ("
+            "  `motherboard_manufacturer` varchar(50) NOT NULL,"
+            "  `motherboard_model_name` varchar(50) NOT NULL,"
+            "  `datetime` datetime NOT NULL)"
+            )
 
         for table in TABLES:
             table_description = TABLES[table]
@@ -99,4 +107,7 @@ class DatabaseInitialization():
             except mysql.connector.Error as error:
                 print(error)
 
-DatabaseInitialization(0,0,0)
+    def return_cursor(self):
+        return self.cnx_cursor
+
+DatabaseInitialization('YOUR HOST','YOUR USER','YOUR USER PASSWORD')
